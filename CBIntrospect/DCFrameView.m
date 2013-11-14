@@ -133,12 +133,13 @@
 	CGContextStrokePath(context);
 
 	NSString *leftDistanceString = (showAntialiasingWarning) ? [NSString stringWithFormat:@"%.1f", CGRectGetMinX(mainRectOffset)] : [NSString stringWithFormat:@"%.0f", CGRectGetMinX(mainRectOffset)];
-	CGSize leftDistanceStringSize = [leftDistanceString sizeWithFont:font];
-	[leftDistanceString drawInRect:CGRectMake(CGRectGetMinX(superRect) + 1.0f,
+    CGSize leftDistanceStringSize = [leftDistanceString sizeWithAttributes:@{NSFontAttributeName:font}];
+    
+    [leftDistanceString drawInRect:CGRectMake(CGRectGetMinX(superRect) + 1.0f,
 											  floorf(CGRectGetMidY(adjustedMainRect)) - leftDistanceStringSize.height,
 											  leftDistanceStringSize.width,
 											  leftDistanceStringSize.height)
-						  withFont:font];
+                    withAttributes:@{NSFontAttributeName:font}];
 
 	// right side->edge
 	if (CGRectGetMaxX(self.mainRect) < CGRectGetMaxX(self.superRect))
@@ -148,24 +149,26 @@
 		CGContextStrokePath(context);
 	}
 	NSString *rightDistanceString = (showAntialiasingWarning) ? [NSString stringWithFormat:@"%.1f", CGRectGetMaxX(self.superRect) - CGRectGetMaxX(adjustedMainRect) - 0.5] : [NSString stringWithFormat:@"%.0f", CGRectGetMaxX(self.superRect) - CGRectGetMaxX(adjustedMainRect) - 0.5];
-	CGSize rightDistanceStringSize = [rightDistanceString sizeWithFont:font];
-	[rightDistanceString drawInRect:CGRectMake(CGRectGetMaxX(self.superRect) - rightDistanceStringSize.width - 1.0f,
+    CGSize rightDistanceStringSize = [rightDistanceString sizeWithAttributes:@{NSFontAttributeName:font}];
+    
+    [rightDistanceString drawInRect:CGRectMake(CGRectGetMaxX(self.superRect) - rightDistanceStringSize.width - 1.0f,
 											   floorf(CGRectGetMidY(adjustedMainRect)) - 0.5f - rightDistanceStringSize.height,
 											   rightDistanceStringSize.width,
 											   rightDistanceStringSize.height)
-						   withFont:font];
+                    withAttributes:@{NSFontAttributeName:font}];
 
 	// edge->top side
 	CGContextMoveToPoint(context, floorf(CGRectGetMidX(adjustedMainRect)) + 0.5f, self.superRect.origin.y);
 	CGContextAddLineToPoint(context, floorf(CGRectGetMidX(adjustedMainRect)) + 0.5f, CGRectGetMinY(adjustedMainRect));
 	CGContextStrokePath(context);
 	NSString *topDistanceString = (showAntialiasingWarning) ? [NSString stringWithFormat:@"%.1f",  mainRectOffset.origin.y] : [NSString stringWithFormat:@"%.0f", mainRectOffset.origin.y];
-	CGSize topDistanceStringSize = [topDistanceString sizeWithFont:font];
-	[topDistanceString drawInRect:CGRectMake(floorf(CGRectGetMidX(adjustedMainRect)) + 3.0f,
-											   floorf(CGRectGetMinY(self.superRect)),
-											   topDistanceStringSize.width,
-											   topDistanceStringSize.height)
-						   withFont:font];
+    CGSize topDistanceStringSize = [topDistanceString sizeWithAttributes:@{NSFontAttributeName:font}];
+    
+    [topDistanceString drawInRect:CGRectMake(floorf(CGRectGetMidX(adjustedMainRect)) + 3.0f,
+                                             floorf(CGRectGetMinY(self.superRect)),
+                                             topDistanceStringSize.width,
+                                             topDistanceStringSize.height)
+                     withAttributes:@{NSFontAttributeName:font}];
 
 	// bottom side->edge
 	if (CGRectGetMaxY(self.mainRect) < CGRectGetMaxY(self.superRect))
@@ -175,13 +178,13 @@
 		CGContextStrokePath(context);
 	}
 	NSString *bottomDistanceString = (showAntialiasingWarning) ? [NSString stringWithFormat:@"%.1f",  CGRectGetMaxY(self.superRect) - CGRectGetMaxY(mainRectOffset)] : [NSString stringWithFormat:@"%.0f", self.superRect.size.height - mainRectOffset.origin.y - mainRectOffset.size.height];
-	CGSize bottomDistanceStringSize = [bottomDistanceString sizeWithFont:font];
-	[bottomDistanceString drawInRect:CGRectMake(floorf(CGRectGetMidX(adjustedMainRect)) + 3.0f,
+    CGSize bottomDistanceStringSize = [bottomDistanceString sizeWithAttributes:@{NSFontAttributeName:font}];
+    
+    [bottomDistanceString drawInRect:CGRectMake(floorf(CGRectGetMidX(adjustedMainRect)) + 3.0f,
 												floorf(CGRectGetMaxY(self.superRect)) - bottomDistanceStringSize.height - 1.0f,
 												bottomDistanceStringSize.width,
 												bottomDistanceStringSize.height)
-							withFont:font];
-
+                   withAttributes:@{NSFontAttributeName:font}];
 }
 
 #pragma mark Touch Handling
@@ -198,7 +201,7 @@
 	NSString *touchPontLabelString = [NSString stringWithFormat:@"%.0f, %.0f", touchPoint.x, touchPoint.y];
 	self.touchPointLabel.text = touchPontLabelString;
 
-	CGSize stringSize = [touchPontLabelString sizeWithFont:touchPointLabel.font];
+    CGSize stringSize = [touchPontLabelString sizeWithAttributes:@{NSFontAttributeName:touchPointLabel.font}];
 	CGRect frame = CGRectMake(touchPoint.x - floorf(stringSize.width / 2.0f) - 5.0f,
 							  touchPoint.y - stringSize.height - labelDistance,
 							  stringSize.width + 11.0f,
